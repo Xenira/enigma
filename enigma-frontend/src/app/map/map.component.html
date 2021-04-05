@@ -1,0 +1,17 @@
+<!-- <em class="fas fa-map-marker"></em><span>x: {{ position?.x }} | y: {{ position?.y }}</span> -->
+<div class="container">
+  <div>
+    <div class="grid-row" *ngFor="let row of tiles | async; let y = index">
+      <enigma-tile *ngFor="let tile of row; let x = index" [shift]="x === 0 && y % 2 === 0"
+        [shiftDirection]="tile.position.y % 2 === 0 ? 'left' : 'right'" (selected)="move(tile.position)">
+        <div>
+          <em *ngIf="tile.position.x === position?.x && tile.position.y === position?.y" class="fas fa-rocket"></em>
+          <em *ngFor="let entity of tile.entities" class="fas"
+            [class.fa-globe]="entity.type === entityTpes.PLANET"></em>
+          <em *ngIf="tile.position.x === 0 && tile.position.y === 0" class="fas fa-home"></em>
+        </div>
+        <span>x: {{ tile.position.x }} | y: {{ tile.position.y }}</span>
+      </enigma-tile>
+    </div>
+  </div>
+</div>
