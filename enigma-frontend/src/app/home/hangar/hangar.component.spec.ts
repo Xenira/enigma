@@ -8,9 +8,8 @@ describe('HangarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HangarComponent ]
-    })
-    .compileComponents();
+      declarations: [HangarComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

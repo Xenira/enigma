@@ -1,0 +1,14 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [ "$CURRENT_BRANCH" == "master" ] || [ "$CURRENT_BRANCH" == "dev" ]; then
+  echo "[PROTECTED] Error: Cannot commit to protected branch '$CURRENT_BRANCH'." >&2
+  exit 1
+fi
+
+if [[ $(git diff --stat --cached -- enigma-frontend) ]]; then
+  echo "Validating formating in frontend project..."
+  cd enigma-frontend
+  npm run format:check || (echo "Please run 'npm run format' to apply formating." && false)
+fi

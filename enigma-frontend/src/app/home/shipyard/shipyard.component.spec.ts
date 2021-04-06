@@ -8,9 +8,8 @@ describe('ShipyardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ShipyardComponent ]
-    })
-    .compileComponents();
+      declarations: [ShipyardComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

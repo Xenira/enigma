@@ -1,0 +1,6 @@
+{
+  "wrap_attributes": "aligned-multiple",
+  "indent_size": 2,
+  "wrap_line_length": 140,
+  "end_with_newline": true
+}

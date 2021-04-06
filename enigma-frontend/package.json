@@ -7,7 +7,11 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "prepare": "cd .. && husky install enigma-frontend/.husky",
+    "format:html": "js-beautify --editorconfig -f src/**/*.html",
+    "format:check": "prettier -u -c src",
+    "format": "prettier -u -w src && npm run format:html"
   },
   "private": true,
   "dependencies": {
@@ -22,6 +26,7 @@
     "@fortawesome/fontawesome-free": "^5.15.3",
     "pixi.js": "^6.0.1",
     "rxjs": "~6.6.0",
+    "source-sans": "^3.28.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
   },
@@ -31,7 +36,9 @@
     "@angular/compiler-cli": "~11.1.2",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
+    "beautify": "0.0.8",
     "codelyzer": "^6.0.0",
+    "husky": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.2.0",
@@ -39,6 +46,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "prettier": "^2.2.1",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
