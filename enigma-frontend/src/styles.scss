@@ -3,6 +3,7 @@
 @import "app/enigma-common/style/enigma-ui.scss";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~source-sans/source-sans-3.css";
 
 html,
 body {
@@ -10,4 +11,5 @@ body {
   color: $text;
   height: 100%;
   margin: 0;
+  font-family: "Source Sans 3";
 }

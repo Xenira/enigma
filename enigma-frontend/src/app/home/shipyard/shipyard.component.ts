@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'enigma-shipyard',
   templateUrl: './shipyard.component.html',
-  styleUrls: ['./shipyard.component.scss']
+  styleUrls: ['./shipyard.component.scss'],
 })
 export class ShipyardComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
