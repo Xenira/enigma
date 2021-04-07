@@ -1,0 +1,20 @@
+{
+  "name": "enigma-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "heroku-postbuild": "cd enigma-backend && npm i && npm run build && cd ../enigma-frontend && npm i && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xenira/enigma.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Xenira/enigma/issues"
+  },
+  "homepage": "https://github.com/Xenira/enigma#readme"
+}

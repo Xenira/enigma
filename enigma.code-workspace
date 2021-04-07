@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "enigma-frontend"
+		},
+		{
+			"path": "enigma-backend"
+		}
+	],
+	"settings": {}
+}
