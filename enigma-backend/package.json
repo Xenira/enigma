@@ -5,6 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "dotenv nodemon src/index.ts",
+		"run": "node index.ts",
 		"build": "tsc --project ./",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
