@@ -3,7 +3,12 @@ import { init } from './user.model';
 
 const config: Knex.Config = {
 	client: 'pg',
-	connection: process.env.DATABASE_URL,
+	connection: {
+		connectionString: process.env.DATABASE_URL,
+		ssl: {
+			rejectUnauthorized: false,
+		},
+	},
 };
 
 const knexInstance = knex(config);

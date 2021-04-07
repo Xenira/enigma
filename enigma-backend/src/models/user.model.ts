@@ -31,9 +31,9 @@ export interface IUserTable {
 }
 
 export async function init(knex: Knex) {
-	if (!(await knex.schema.hasTable('users'))) {
-		await knex.schema
-			.createTable('users', (table) => {
+	try {
+		if (!(await knex.schema.hasTable('users'))) {
+			await knex.schema.createTable('users', (table) => {
 				table.uuid('id');
 				table.string('name').notNullable();
 				table.string('email').notNullable();
@@ -46,16 +46,14 @@ export async function init(knex: Knex) {
 				table.string('salt');
 				table.timestamps();
 				table.unique(['id', 'name', 'email']);
-			})
-			.then(() => {
-				console.log('User table was created');
-			})
-			.catch((err) => {
-				console.error('Failed to create user table', err);
-				exit(1);
 			});
-	} else {
-		console.debug('User table already exists');
+			console.log('User table was created');
+		} else {
+			console.debug('User table already exists');
+		}
+	} catch (err) {
+		console.error('Failed to create user table', err);
+		exit(1);
 	}
 }
 
