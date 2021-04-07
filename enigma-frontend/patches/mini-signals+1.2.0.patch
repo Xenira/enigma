@@ -1,0 +1,19 @@
+diff --git a/node_modules/mini-signals/typings/mini-signals.d.ts b/node_modules/mini-signals/typings/mini-signals.d.ts
+index 7214e1d..0b5dd72 100644
+--- a/node_modules/mini-signals/typings/mini-signals.d.ts
++++ b/node_modules/mini-signals/typings/mini-signals.d.ts
+@@ -5,7 +5,7 @@ declare module "mini-signals" {
+ 		}
+ 	}
+ 
+-	class MiniSignal {
++	export class MiniSignal {
+ 		constructor();
+ 		handlers(exists?: boolean): MiniSignal.MiniSignalBinding[] | boolean;
+ 		has(node: MiniSignal.MiniSignalBinding): boolean;
+@@ -16,5 +16,4 @@ declare module "mini-signals" {
+ 		detachAll(): MiniSignal;
+ 	}
+ 
+-	export = MiniSignal;
+ }
