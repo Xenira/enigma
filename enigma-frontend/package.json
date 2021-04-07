@@ -9,6 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "prepare": "cd .. && husky install enigma-frontend/.husky",
+    "postinstall": "patch-package",
     "format:html": "js-beautify --editorconfig -f src/**/*.html",
     "format:check": "prettier -u -c src",
     "format": "prettier -u -w src && npm run format:html"
@@ -46,6 +47,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "patch-package": "^6.4.7",
     "prettier": "^2.2.1",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
