@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm i --prefix ./enigma-backend && npm i --prefix ./enigma-frontend",
+    "postinstall": "npm i --prefix ./enigma-backend --also=dev && npm i --prefix ./enigma-frontend --also=dev",
     "heroku-postbuild": "npm run build:backend && npm run build:frontend",
     "build:backend": "npm run build --prefix ./enigma-backend",
     "build:frontend": "npm run build --prefix ./enigma-frontend",
