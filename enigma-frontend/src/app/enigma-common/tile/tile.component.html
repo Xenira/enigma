@@ -1,17 +1,10 @@
-<div
-  class="hex"
-  [style.width.px]="size"
-  [style.margin-left.px]="shift ? -(size / 2) : 0"
->
+<div class="hex" [style.width.px]="size" [style.margin-left.px]="shift ? -(size / 2) : 0">
   <div class="hex-inner">
     <div class="hex-content" (click)="tileClicked()">
       <div class="content">
         <ng-content></ng-content>
       </div>
-      <img
-        src="https://d33wubrfki0l68.cloudfront.net/0c24d63303fd772a293a5e229bd0f00aef1cd95a/e72cc/assets/img/defaultframe.svg"
-        class="defaultFrame"
-      />
+      <img src="../../../assets/img/hex_a.png" class="defaultFrame" alt="hex-tile" />
     </div>
   </div>
 </div>

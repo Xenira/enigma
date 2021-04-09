@@ -1,8 +1,12 @@
+.map-background {
+  background-image: url("../../assets/img/bg/14.jpg");
+  background-size: cover;
+}
 .grid-row {
   position: relative;
 }
 
-.container {
+.map-container {
   width: 100%;
   height: 100%;
   overflow: hidden;

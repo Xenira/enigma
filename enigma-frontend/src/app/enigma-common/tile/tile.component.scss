@@ -32,7 +32,6 @@
     visibility: visible;
     outline: 1px solid transparent;
     transform: skewY(-30deg) rotate3d(0, 0, 1, 60deg);
-
     &:hover {
       background-color: $accent;
     }
@@ -45,6 +44,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      z-index: 1;
     }
 
     img {
