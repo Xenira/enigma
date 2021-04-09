@@ -1,0 +1,4 @@
+<div class="d-flex flex-column">
+  <h5>Planets:</h5>
+  <a class="btn" *ngFor="let planet of planets | async; let i = index" [routerLink]="planet.id">{{planet.name}}</a>
+</div>
