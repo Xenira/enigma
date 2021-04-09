@@ -1,13 +1,27 @@
 @import "../../../colors.scss";
 
-@import "button/button.scss";
+@import "button.scss";
+@import "misc.scss";
+@import "forms.scss";
 
 .d-flex {
   display: flex;
 }
 
-.column {
+.flex-column {
   flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-center {
+  align-items: center;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .space-around {
@@ -27,10 +41,14 @@
   height: 100%;
 }
 
+.w-100 {
+  width: 100%;
+}
+
 .margin {
   margin: 1rem;
 }
 
-span.danger {
+.danger {
   color: $danger;
 }

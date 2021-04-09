@@ -1,0 +1,8 @@
+= Enigma
+Space-Themed Browsergame with Hex map and real-time combat.
+
+== License
+Code is licensed under GPL-3.0 License. Assets might have a different License. Please see section below:
+
+=== Assets
+Buttons and Title:: link:https://wenrexa.itch.io/kit-nesia2[Assets: UI Minimalism SciFi]

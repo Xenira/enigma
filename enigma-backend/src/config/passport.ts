@@ -2,21 +2,23 @@ import { Response } from 'express';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import knexInstance from '../models/db';
-import { checkPassword, IUser } from '../models/user.model';
+import { checkPassword, IUser, UserWithDetails } from '../models/user.model';
 import HttpError from './error';
 
 passport.use(
 	'local',
-	new LocalStrategy((username, password, done) => {
+	new LocalStrategy((email, password, done) => {
 		knexInstance<IUser>('users')
-			.where('name', username)
-			.or.where('email', username)
+			.select('id', 'name', 'email', 'password', 'salt')
+			.where('email', email)
 			.first()
 			.then((user) => {
 				if (!user) {
 					return done(null, false);
 				}
 				checkPassword(user, password, (success) => {
+					delete user.password;
+					delete user.salt;
 					if (success) {
 						return done(null, user);
 					}
@@ -31,12 +33,14 @@ passport.use(
 );
 
 passport.serializeUser((user: any, done) => {
-	done(null, user._id);
+	console.log('Serializing user', user);
+	done(null, user.id);
 });
 
 passport.deserializeUser((id: string, done) => {
 	console.log('Deserializing user', id);
 	knexInstance<IUser>('users')
+		.select(UserWithDetails)
 		.where('id', id)
 		.first()
 		.then((user) => {

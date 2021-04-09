@@ -1,24 +1,33 @@
 import * as crypto from 'crypto';
 import { Knex } from 'knex';
-import { Tables } from 'knex/types/tables';
-import { exit } from 'process';
 
+export const UserWithoutDetails = ['name', 'email', 'permissions'];
+export const UserWithDetails = [
+	'id',
+	...UserWithoutDetails,
+	'verificationCode',
+	'verificationExpires',
+	'created_at',
+	'updated_at',
+];
 export interface IUser {
+	id: string;
 	name: string;
 	email: string;
-	permissions: UserPermissions;
+	permissions?: UserPermissions;
 	verificationCode?: string;
 	verificationExpires?: string;
-	password: string;
-	salt: string;
+	password?: string;
+	salt?: string;
 	created_at?: string;
 	updated_at?: string;
 }
 
 export enum UserPermissions {
-	USER,
-	MODERATOR,
-	ADMIN,
+	UNCONFIRMED = 'UNCONFIRMED',
+	USER = 'USER',
+	MODERATOR = 'MODERATOR',
+	ADMIN = 'ADMIN',
 }
 
 export interface IUserTable {
@@ -28,33 +37,6 @@ export interface IUserTable {
 		Pick<IUser, 'name'> & Partial<Pick<IUser, 'created_at' | 'updated_at'>>,
 		Partial<Omit<IUser, 'id'>>
 	>;
-}
-
-export async function init(knex: Knex) {
-	try {
-		if (!(await knex.schema.hasTable('users'))) {
-			await knex.schema.createTable('users', (table) => {
-				table.uuid('id');
-				table.string('name').notNullable();
-				table.string('email').notNullable();
-				table
-					.enu('permissions', ['USER', 'MODERATOR', 'ADMIN'])
-					.defaultTo('USER');
-				table.string('verificationCode');
-				table.timestamp('verificationExpires');
-				table.string('password');
-				table.string('salt');
-				table.timestamps();
-				table.unique(['id', 'name', 'email']);
-			});
-			console.log('User table was created');
-		} else {
-			console.debug('User table already exists');
-		}
-	} catch (err) {
-		console.error('Failed to create user table', err);
-		exit(1);
-	}
 }
 
 export function setPassword(user: IUser, password: string, cb: () => void) {
@@ -80,6 +62,10 @@ export function checkPassword(
 	password: string,
 	cb: (success: boolean) => void
 ) {
+	if (!user.salt) {
+		console.warn('User', user.name, 'is missing salt');
+		return cb(false);
+	}
 	crypto.pbkdf2(
 		password,
 		user.salt,

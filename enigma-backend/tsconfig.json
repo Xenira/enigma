@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"target": "es6",
 		"module": "commonjs",
-		"rootDir": "./src",
+		"rootDirs": ["./src", "./migrations"],
 		"outDir": "../dist",
 		"esModuleInterop": true,
 		"strict": true

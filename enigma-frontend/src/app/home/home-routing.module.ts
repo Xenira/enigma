@@ -5,6 +5,7 @@ import { EventsComponent } from './events/events.component';
 import { HomeComponent } from './home.component';
 import { InboxComponent } from './inbox/inbox.component';
 import { OverviewComponent } from './overview/overview.component';
+import { PlanetDetailsComponent } from './planet/planet-details/planet-details.component';
 import { PlanetComponent } from './planet/planet.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ResearchComponent } from './research/research.component';
@@ -42,6 +43,12 @@ const routes: Routes = [
       {
         path: 'planet',
         component: PlanetComponent,
+        children: [
+          {
+            path: ':id',
+            component: PlanetDetailsComponent,
+          },
+        ],
       },
       {
         path: 'profile',
