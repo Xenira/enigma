@@ -33,7 +33,7 @@ passport.use(
 );
 
 passport.serializeUser((user: any, done) => {
-	console.log('Serializing user', user);
+	console.log('Serializing user', user, 'to', user.id);
 	done(null, user.id);
 });
 
@@ -44,6 +44,7 @@ passport.deserializeUser((id: string, done) => {
 		.where('id', id)
 		.first()
 		.then((user) => {
+			console.log('Deserialized to', user);
 			done(null, user);
 		})
 		.catch((err) => {
