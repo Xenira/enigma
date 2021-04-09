@@ -7,7 +7,7 @@ import * as userCtrl from '../controllers/user.controller';
 
 const router: Router = Router();
 
-router.get('/', userCtrl.getCurrentUser);
+router.get('/login', userCtrl.getCurrentUser);
 router.post(
 	'/login',
 	authorize('local', { failWithError: true }),

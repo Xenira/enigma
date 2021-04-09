@@ -12,6 +12,8 @@ import { CombatSimComponent } from './combat-sim/combat-sim.component';
 import { InboxComponent } from './inbox/inbox.component';
 import { EventsComponent } from './events/events.component';
 import { ProfileComponent } from './profile/profile.component';
+import { PlanetListComponent } from './planet/planet-list/planet-list.component';
+import { PlanetDetailsComponent } from './planet/planet-details/planet-details.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { ProfileComponent } from './profile/profile.component';
     InboxComponent,
     EventsComponent,
     ProfileComponent,
+    PlanetListComponent,
+    PlanetDetailsComponent,
   ],
   imports: [CommonModule, EnigmaCommonModule, HomeRoutingModule],
   bootstrap: [HomeComponent],

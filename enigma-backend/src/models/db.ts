@@ -1,18 +1,30 @@
 import knex, { Knex } from 'knex';
-import { init } from './user.model';
 
 const config: Knex.Config = {
 	client: 'pg',
 	connection: {
 		connectionString: process.env.DATABASE_URL,
-		ssl: {
-			rejectUnauthorized: false,
-		},
 	},
 };
 
+if (process.env.PRODUCTION) {
+	(config.connection as Knex.PgConnectionConfig).ssl = {
+		rejectUnauthorized: false,
+	};
+}
+
 const knexInstance = knex(config);
 
-init(knexInstance);
+console.log('Running migrations');
+knexInstance.migrate
+	.latest({
+		loadExtensions: ['.ts', '.js'],
+	})
+	.then((result) => {
+		console.log('Finished running migrations', result);
+	})
+	.catch((e) => {
+		console.error('Failed to run database migrations', e);
+	});
 
 export default knexInstance;
