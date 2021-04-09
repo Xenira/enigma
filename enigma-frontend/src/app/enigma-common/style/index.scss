@@ -33,8 +33,25 @@
 }
 
 .container {
-  padding: 8px;
+  margin: 16px 8px;
+  padding: 16px;
   box-sizing: border-box;
+  &.colored {
+    border-top: 4px solid $border-accent;
+    background-color: darken($accent, 15%);
+    & > h2 {
+      margin-top: -8px;
+      margin-bottom: 0;
+      font-weight: 200;
+      color: $border-accent;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    margin: 16px 10%;
+  }
 }
 
 .h-100 {
@@ -51,4 +68,11 @@
 
 .danger {
   color: $danger;
+}
+
+.hr {
+  height: 0;
+  width: 95%;
+  border-bottom: 1px solid transparentize(darken($text, 50%), 0.75);
+  margin: 6px 2.5% 16px 2.5%;
 }

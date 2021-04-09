@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { check } from 'express-validator';
 import { authorize } from 'passport';
 import Authorization from '../config/passport';
 
@@ -10,6 +11,7 @@ const router: Router = Router();
 router.get('/login', userCtrl.getCurrentUser);
 router.post(
 	'/login',
+	check('email').isString().trim().isEmail().normalizeEmail(),
 	authorize('local', { failWithError: true }),
 	Authorization.login
 );
