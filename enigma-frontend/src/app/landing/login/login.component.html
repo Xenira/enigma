@@ -1,4 +1,6 @@
-<form class="container d-flex flex-column flex-center" (ngSubmit)="login()" [formGroup]="loginForm">
+<form class="container colored d-flex flex-column flex-center" (ngSubmit)="login()" [formGroup]="loginForm">
+  <h2>Login</h2>
+  <div class="hr"></div>
   <div class="form-group">
     <label for="email">Email</label>
     <input type="text" name="email" formControlName="email" autocomplete="email">
