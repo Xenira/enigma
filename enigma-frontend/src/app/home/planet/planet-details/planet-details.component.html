@@ -1,0 +1,7 @@
+{{(planet | async)?.name}}
+
+<div class="">
+  <div *ngFor="let building of (planet | async)?.buildings; let i = index" class="slot">
+    {{building.name}}
+  </div>
+</div>

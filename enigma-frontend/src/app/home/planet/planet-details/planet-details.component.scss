@@ -1,0 +1,10 @@
+@import "../../../../colors.scss";
+
+.slot {
+  height: 128px;
+  width: 128px;
+  border: 4px solid $accent;
+  margin: 4px;
+  display: inline-block;
+  vertical-align: bottom;
+}
