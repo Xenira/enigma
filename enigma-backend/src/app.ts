@@ -4,12 +4,12 @@ import session from 'express-session';
 import logger from 'morgan';
 import passport from 'passport';
 import * as path from 'path';
-import * as favicon from 'serve-favicon';
+import KnexSessionStore from 'connect-session-knex';
+import knexInstance from './models/db';
 
 // ####################################
 // Import routes and db inits
 // ####################################
-import './models/db';
 import router from './routes';
 
 const app = express();
@@ -27,14 +27,27 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(
-	session({
-		cookie: { secure: app.get('env') !== 'development', maxAge: 3600000 },
-		resave: true,
-		saveUninitialized: true,
-		secret: 'keyboard cat',
-	})
-);
+
+if (!process.env.SESSION_SECRET) {
+	throw new Error(
+		'Session secret must be set. Please provide SESSION_SECRET environment variable'
+	);
+}
+const sessionConfig: session.SessionOptions = {
+	secret: process.env.SESSION_SECRET,
+	cookie: { maxAge: 3600000 },
+	saveUninitialized: false,
+	resave: false,
+	store: new (KnexSessionStore(session))({
+		knex: knexInstance as any,
+	}),
+};
+if (app.get('env') === 'production') {
+	app.set('trust proxy', 1);
+	(sessionConfig.cookie || {}).secure = true;
+}
+app.use(session(sessionConfig));
+
 app.use(passport.initialize());
 app.use(passport.session());
 import './config/passport';
