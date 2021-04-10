@@ -1,5 +1,6 @@
 import * as crypto from 'crypto';
-import { Knex } from 'knex';
+
+export const UserTable = 'users';
 
 export const UserWithoutDetails = ['name', 'email', 'permissions'];
 export const UserWithDetails = [
@@ -28,15 +29,6 @@ export enum UserPermissions {
 	USER = 'USER',
 	MODERATOR = 'MODERATOR',
 	ADMIN = 'ADMIN',
-}
-
-export interface IUserTable {
-	users: IUser;
-	usersComposite: Knex.CompositeTableType<
-		IUser,
-		Pick<IUser, 'name'> & Partial<Pick<IUser, 'created_at' | 'updated_at'>>,
-		Partial<Omit<IUser, 'id'>>
-	>;
 }
 
 export function setPassword(user: IUser, password: string, cb: () => void) {

@@ -8,7 +8,9 @@
 		"run": "node index.ts",
 		"build": "tsc --project ./",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"migrate": "dotenv knex migrate:make -x ts"
+		"migrate": "dotenv knex migrate:make -x ts",
+		"down": "dotenv knex migrate:down -x ts",
+		"seed": "dotenv knex seed:make -x ts"
 	},
 	"author": "",
 	"license": "ISC",
@@ -19,6 +21,7 @@
 		"express-session": "^1.17.1",
 		"express-validator": "^6.10.0",
 		"knex": "^0.95.4",
+		"moment": "^2.29.1",
 		"mongoose": "^5.12.3",
 		"morgan": "^1.10.0",
 		"passport": "^0.4.1",

@@ -1,17 +1,21 @@
-import { Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import knexInstance from '../models/db';
-import { checkPassword, IUser, UserWithDetails } from '../models/user.model';
+import {
+	checkPassword,
+	IUser,
+	UserTable,
+	UserWithDetails,
+} from '../models/user.model';
 import HttpError from './error';
 
 passport.use(
 	'local',
 	new LocalStrategy((email, password, done) => {
-		knexInstance<IUser>('users')
-			.select('id', 'name', 'email', 'password', 'salt')
+		knexInstance(UserTable)
+			.first('id', 'name', 'email', 'password', 'salt')
 			.where('email', email)
-			.first()
 			.then((user) => {
 				if (!user) {
 					return done(null, false);
@@ -39,7 +43,7 @@ passport.serializeUser((user: any, done) => {
 
 passport.deserializeUser((id: string, done) => {
 	console.log('Deserializing user', id);
-	knexInstance<IUser>('users')
+	knexInstance(UserTable)
 		.select(UserWithDetails)
 		.where('id', id)
 		.first()
@@ -65,12 +69,12 @@ export default class Authorization {
 		});
 	}
 
-	public static any(req: any, res: any, next: any) {
-		console.log(req.isAuthenticated());
+	public static any(req: Request, res: Response, next: NextFunction) {
 		if (req.isAuthenticated()) {
 			return next();
 		}
 
+		console.warn('Unauthorized request to', req.url);
 		res.sendStatus(401);
 	}
 }

@@ -4,7 +4,7 @@ import * as uuid from 'uuid';
 
 import validation from '../config/validation';
 import knexInstance from '../models/db';
-import { IUser, setPassword, UserPermissions } from '../models/user.model';
+import { IUser, setPassword, UserTable } from '../models/user.model';
 
 // POST: /register
 export const register = [
@@ -21,7 +21,7 @@ export const register = [
 			salt: '',
 		};
 		setPassword(user, req.body.password, () => {
-			knexInstance<IUser>('users')
+			knexInstance(UserTable)
 				.insert(user)
 				.then((result) => {
 					delete user.password;

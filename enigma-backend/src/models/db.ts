@@ -1,5 +1,10 @@
 import knex, { Knex } from 'knex';
 
+export interface ITimestamps {
+	created_at: Date;
+	updated_at: Date;
+}
+
 const config: Knex.Config = {
 	client: 'pg',
 	connection: {
@@ -11,6 +16,8 @@ if (process.env.PRODUCTION) {
 	(config.connection as Knex.PgConnectionConfig).ssl = {
 		rejectUnauthorized: false,
 	};
+} else {
+	config.debug = !!process.env.DEBUG;
 }
 
 const knexInstance = knex(config);
