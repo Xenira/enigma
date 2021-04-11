@@ -1,0 +1,35 @@
+nav {
+  display: flex;
+  justify-content: flex-start;
+  background-color: $card-bg;
+
+  &:not(.column) {
+    border-bottom: 1px solid $light;
+    width: 100%;
+    .nav-btn {
+      border-bottom: 1px solid $light;
+      margin-bottom: -1px;
+    }
+  }
+  &.column {
+    flex-direction: column;
+    .nav-btn {
+      border-right: 1px solid;
+      margin-right: -1px;
+    }
+  }
+
+  .nav-btn {
+    padding: 1rem 2.5rem;
+
+    &:hover {
+      border-color: $accent-light;
+      color: $accent-light;
+    }
+
+    &.active {
+      border-color: $border-accent;
+      color: $border-accent;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+@import "./colors.scss";
+
+.alert {
+  margin: 0.8rem 0;
+  padding: 1rem 2rem;
+  border-radius: 1px;
+  background-color: $grey-light;
+  border-left: 4px solid lighten($grey-light, 25%);
+
+  &.warning {
+    border-color: orange;
+  }
+}
