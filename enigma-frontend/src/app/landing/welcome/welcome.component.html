@@ -1,14 +1,22 @@
-<div class="d-flex flex-column flex-center">
+<div class="d-flex flex-column flex-center container">
   <h1 class="title" routerLink="">Enigma</h1>
-  <div class="container text-center">
+  <div class="row center">
+    <button type="button" class="btn col" routerLink="register" routerLinkActive="active">Register</button>
+    <button type="button" class="btn col" routerLink="login" routerLinkActive="active">Login</button>
+  </div>
+  <p class="text-center">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
     minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
     in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
     officia deserunt mollit anim id est laborum.
-  </div>
-  <div>
-    <button type="button" class="btn" routerLink="register" routerLinkActive="active">Register</button>
-    <button type="button" class="btn" routerLink="login" routerLinkActive="active">Login</button>
+  </p>
+  <div class="alert warning">
+    <p>This Game is still in active development. Most things are not yet implemented or work in progress. We may also need to reset some
+      progress or even entire accounts. So don't get too attached to your data, as it might just disappear into the next black hole.</p>
+    <p>We would still love to see you
+      trying it and provide us with feedback on the things already implemented.<br>You can <a href="https://github.com/Xenira/enigma/issues"
+         target="_blank" rel="noopener noreferrer">report problems or provide
+        feedback</a> on our github page.</p>
   </div>
   <router-outlet>
   </router-outlet>

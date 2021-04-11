@@ -1,0 +1,36 @@
+@import "./colors.scss";
+
+.card {
+  border: 1px solid $background-secondary;
+  border-top: 2px solid $border-accent;
+  padding: 1rem 2rem;
+  border-radius: 1px;
+  background-color: $background-secondary;
+  box-shadow: 0 1px 3px $background-secondary;
+  margin: 0.75rem 0;
+
+  & > nav {
+    margin: 0 -2rem;
+    width: calc(100% + 4rem);
+  }
+}
+
+.card p:last-child {
+  margin: 0;
+}
+
+.card header {
+  & > * {
+    font-weight: lighter;
+    color: $border-accent;
+    text-align: center;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  & > img {
+    margin: -1rem calc(-2rem - 1px);
+    margin-bottom: 1rem;
+    width: calc(100% + 4rem + 2px);
+  }
+}

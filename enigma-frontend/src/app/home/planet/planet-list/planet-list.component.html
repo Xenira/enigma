@@ -1,4 +1,10 @@
-<div class="d-flex flex-column">
-  <h5>Planets:</h5>
-  <a class="btn" *ngFor="let planet of planets | async; let i = index" [routerLink]="planet.id">{{planet.name}}</a>
+<div class="card">
+  <header>
+    <h3>Planets</h3>
+  </header>
+  <hr>
+  <nav class="column">
+    <a class="nav-btn" *ngFor="let planet of planets | async; let i = index" [routerLink]="planet.id"
+       routerLinkAktive="active">{{planet.name}}</a>
+  </nav>
 </div>
