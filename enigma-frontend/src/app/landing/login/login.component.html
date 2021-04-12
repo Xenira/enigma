@@ -1,6 +1,8 @@
-<form class="container colored d-flex flex-column flex-center" (ngSubmit)="login()" [formGroup]="loginForm">
-  <h2>Login</h2>
-  <div class="hr"></div>
+<form class="card" (ngSubmit)="login()" [formGroup]="loginForm">
+  <header>
+    <h2>Login</h2>
+  </header>
+  <hr>
   <div class="form-group">
     <label for="email">Email</label>
     <input type="text" name="email" formControlName="email" autocomplete="email">
@@ -10,5 +12,7 @@
     <input type="password" name="password" formControlName="password" autocomplete="current-password">
   </div>
   <small *ngIf="loginFailed" class="danger">Login failed. Please check your credentials.</small>
-  <button type="submit" class="btn" [disabled]="loginForm.invalid">Login</button>
+  <div class="row center">
+    <button type="submit" class="btn" [disabled]="loginForm.invalid">Login</button>
+  </div>
 </form>

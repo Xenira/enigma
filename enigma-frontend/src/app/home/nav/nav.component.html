@@ -1,15 +1,23 @@
-<div class="d-flex">
+<nav>
   <div class="flex"></div>
-  <button type="button" class="btn" routerLink="./">Overview</button>
-  <button type="button" class="btn" routerLink="planet" routerLinkActive="active">Planet</button>
-  <button type="button" class="btn" routerLink="research" routerLinkActive="active">Research</button>
-  <button type="button" class="btn" routerLink="shipyard" routerLinkActive="active">Shipyard</button>
-  <button type="button" class="btn" routerLink="hangar" routerLinkActive="active">Hangar</button>
-  <button type="button" class="btn" routerLink="combat-sim" routerLinkActive="active">Combat Sim</button>
+  <a class="nav-btn" routerLink="./">Overview</a>
+  <a class="nav-btn" routerLink="planet" routerLinkActive="active">Planet</a>
+  <a class="nav-btn" routerLink="research" routerLinkActive="active">Research</a>
+  <a class="nav-btn" routerLink="shipyard" routerLinkActive="active">Shipyard</a>
+  <a class="nav-btn" routerLink="hangar" routerLinkActive="active">Hangar</a>
+  <a class="nav-btn" routerLink="combat-sim" routerLinkActive="active">Combat Sim</a>
   <div class="flex"></div>
-  <button type="button" class="btn" routerLink="inbox" routerLinkActive="active">
+  <a class="nav-btn" routerLink="inbox" routerLinkActive="active">
     <em class="fas fa-envelope"></em>
-  </button>
-  <button type="button" class="btn" routerLink="events" routerLinkActive="active">Events</button>
-  <button type="button" class="btn" routerLink="profile" routerLinkActive="active">Profile</button>
-</div>
+  </a>
+  <a class="nav-btn" routerLink="events" routerLinkActive="active"><em class="far fa-bell"></em></a>
+  <ul>
+    <li>
+      <a class="nav-btn" routerLink="profile" routerLinkActive="active"><em class="fas fa-user"></em>
+      </a>
+      <ul class="left">
+        <li><a class="nav-btn" (click)="logout()">Logout</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,32 @@
+@import "./grid.scss";
+@import "./form.scss";
+@import "./card.scss";
+@import "./util.scss";
+@import "./typography.scss";
+@import "./alert.scss";
+@import "./navbar.scss";
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+hr {
+  border: none;
+  background-color: $grey-light;
+  height: 1px;
+  margin: 1rem 0;
+}
+
+:focus {
+  outline: none;
+}
+
+a,
+[routerLink] {
+  cursor: pointer;
+  &:hover:not(button):not(.btn) {
+    color: lighter($light);
+  }
+}
