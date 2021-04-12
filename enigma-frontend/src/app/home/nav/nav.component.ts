@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/enigma-common/user/user.service';
+import { UserService } from 'src/app/enigma-common/services/user/user.service';
 
 @Component({
   selector: 'enigma-nav',

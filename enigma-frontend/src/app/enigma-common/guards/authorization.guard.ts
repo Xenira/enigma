@@ -12,7 +12,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { UserService } from '../user/user.service';
+import { UserService } from '../services/user/user.service';
 
 @Injectable({
   providedIn: 'root',

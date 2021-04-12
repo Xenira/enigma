@@ -37,7 +37,7 @@ const sessionConfig: session.SessionOptions = {
 	secret: process.env.SESSION_SECRET,
 	cookie: { maxAge: 3600000 },
 	saveUninitialized: false,
-	resave: false,
+	resave: true,
 	store: new (KnexSessionStore(session))({
 		knex: knexInstance as any,
 	}),

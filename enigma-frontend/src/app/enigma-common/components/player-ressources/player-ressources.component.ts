@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IPlayerData, PlayerService } from '../../services/player.service';
+import { IPlayerView } from '../../../../../../enigma-backend/src/views/player.view';
+import { PlayerService } from '../../services/player/player.service';
 
 @Component({
   selector: 'enigma-player-ressources',
@@ -7,12 +8,13 @@ import { IPlayerData, PlayerService } from '../../services/player.service';
   styleUrls: ['./player-ressources.component.scss'],
 })
 export class PlayerRessourcesComponent implements OnInit {
-  public playerData?: IPlayerData;
+  public playerData?: IPlayerView;
 
   constructor(private playerService: PlayerService) {}
 
   ngOnInit(): void {
     this.playerService.getPlayerData().subscribe((data) => {
+      console.log(data);
       this.playerData = data;
     });
   }

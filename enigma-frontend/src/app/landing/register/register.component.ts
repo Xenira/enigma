@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/enigma-common/user/user.service';
+import { UserService } from 'src/app/enigma-common/services/user/user.service';
 
 @Component({
   selector: 'enigma-register',

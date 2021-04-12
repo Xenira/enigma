@@ -1,18 +1,15 @@
 <div class="card d-flex space-around w-100">
-  <span [class.danger]="(playerData?.shekel?.production || 0) < 0"><em class="fas fa-coins"></em> {{ playerData?.shekel?.current }} ({{
-      playerData?.shekel?.production
+  <span [class.danger]="(playerData?.moneyProduction || 0) < 0"><em class="fas fa-coins"></em> {{ playerData?.money }} ({{
+      playerData?.moneyProduction
     }})</span>
-  <span><em class="fas fa-bolt"></em> {{ playerData?.energy?.current }}</span>
-  <span><em class="fas fa-flask"></em> {{ playerData?.science?.current }} ({{
-      playerData?.science?.production
+  <span [class.danger]="(playerData?.energy || 0) <= 0"><em class="fas fa-bolt"></em> {{ playerData?.energy }}</span>
+  <span [class.danger]="(playerData?.scienceProduction || 0) < 0"><em class="fas fa-flask"></em> {{ playerData?.science }} ({{
+      playerData?.scienceProduction
     }})</span>
-  <span><em class="fas fa-pizza-slice"></em> {{ playerData?.food?.current }} ({{
-      playerData?.food?.production
-    }})</span>
-  <span><em class="fas fa-industry"></em> {{ playerData?.industry?.current }} ({{
-      playerData?.industry?.production
-    }})</span>
-  <span><em class="fas fa-gem"></em> {{ playerData?.crystals?.current }} ({{
-      playerData?.crystals?.production
+  <span [class.danger]="(playerData?.industryProduction || 0) < 0"><em class="fas fa-industry"></em> {{ playerData?.industry }} ({{
+        playerData?.industryProduction
+      }})</span>
+  <span [class.danger]="(playerData?.foodProduction || 0) < 0"><em class="fas fa-pizza-slice"></em> {{ playerData?.food }} ({{
+      playerData?.foodProduction
     }})</span>
 </div>
