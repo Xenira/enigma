@@ -10,6 +10,14 @@
   <a class="nav-btn" routerLink="inbox" routerLinkActive="active">
     <em class="fas fa-envelope"></em>
   </a>
-  <a class="nav-btn" routerLink="events" routerLinkActive="active">Events</a>
-  <a class="nav-btn" routerLink="profile" routerLinkActive="active">Profile</a>
+  <a class="nav-btn" routerLink="events" routerLinkActive="active"><em class="far fa-bell"></em></a>
+  <ul>
+    <li>
+      <a class="nav-btn" routerLink="profile" routerLinkActive="active"><em class="fas fa-user"></em>
+      </a>
+      <ul class="left">
+        <li><a class="nav-btn" (click)="logout()">Logout</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>

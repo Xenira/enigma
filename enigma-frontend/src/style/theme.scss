@@ -23,10 +23,10 @@ hr {
   outline: none;
 }
 
+a,
 [routerLink] {
   cursor: pointer;
-}
-
-[routerLink]:hover:not(button):not(.btn) {
-  color: lighter($light);
+  &:hover:not(button):not(.btn) {
+    color: lighter($light);
+  }
 }
