@@ -13,7 +13,8 @@ nav {
   }
   &.column {
     flex-direction: column;
-    .nav-btn {
+    .nav-btn,
+    & > ul {
       border-right: 1px solid;
       margin-right: -1px;
     }
@@ -21,6 +22,7 @@ nav {
 
   .nav-btn {
     padding: 1rem 2.5rem;
+    display: inline-block;
 
     &:hover {
       border-color: $accent-light;
@@ -30,6 +32,40 @@ nav {
     &.active {
       border-color: $border-accent;
       color: $border-accent;
+    }
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: inline-block;
+  }
+
+  & > ul {
+    position: relative;
+    ul {
+      display: none;
+      position: absolute;
+      .nav-btn {
+        border-left: 1px solid;
+        border-right: 1px solid;
+        background-color: $card-bg;
+      }
+    }
+    & > li:hover ul {
+      display: inline-block;
+      top: calc(3rem + 2px);
+      left: -12.5%;
+      &.right {
+        left: 0;
+      }
+      &.left {
+        left: unset;
+        right: 0;
+      }
     }
   }
 }
