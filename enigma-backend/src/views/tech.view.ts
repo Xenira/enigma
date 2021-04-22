@@ -1,15 +1,12 @@
+import Decimal from 'decimal.js';
+import { ITech, ITechTier, ITechView } from 'enigma-common';
 import { IPlayerTech } from '../models/tech.model';
-import { ITech, ITechTier, TechListById } from '../ressources/tech.ressource';
+import { TechListById } from '../ressources/tech.ressource';
 import { View } from './view';
 
-export interface ITechView extends Omit<ITech, 'dependencies'> {
-	progress?: number;
-	dependencies: number[];
-}
-
-export class TechView
-	extends View<Pick<IPlayerTech, 'tech_id' | 'progress'>>
-	implements ITechView {
+type TechViewType = Pick<IPlayerTech, 'tech_id' | 'progress'> &
+	Partial<Pick<IPlayerTech, 'complete' | 'researching'>>;
+export class TechView extends View<TechViewType> implements ITechView {
 	id!: number;
 	name!: string;
 	description!: string;
@@ -18,14 +15,18 @@ export class TechView
 	tier!: ITechTier;
 	image?: string;
 	progress?: number;
+	complete?: boolean;
+	researching?: boolean;
 
-	constructor(player: Pick<IPlayerTech, 'tech_id' | 'progress'>) {
+	constructor(player: TechViewType) {
 		super(player);
 	}
 
-	protected fromModle(model: Pick<IPlayerTech, 'tech_id' | 'progress'>): void {
+	protected fromModle(model: TechViewType): void {
 		this.id = model.tech_id;
-		this.progress = model.progress;
+		this.progress = new Decimal(model.progress || 0).toDP(2).toNumber();
+		this.complete = model.complete;
+		this.researching = model.researching;
 
 		const tech = TechListById[this.id];
 		this.cost = tech.cost;
@@ -37,6 +38,11 @@ export class TechView
 	}
 
 	static fromTech(tech: ITech): TechView {
-		return new TechView({ tech_id: tech.id, progress: undefined });
+		return new TechView({
+			tech_id: tech.id,
+			progress: undefined,
+			complete: undefined,
+			researching: undefined,
+		});
 	}
 }

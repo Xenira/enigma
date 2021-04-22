@@ -19,8 +19,8 @@ declare module 'knex/types/tables' {
 		>;
 		player_techs: Knex.CompositeTableType<
 			IPlayerTech,
-			Pick<IPlayerTech, 'id' | 'player_id'>,
-			Partial<Omit<IPlayer, 'id'>> & UpdatedAt
+			Pick<IPlayerTech, 'id' | 'user_id' | 'tech_id'> & Partial<IPlayerTech>,
+			Partial<Omit<IPlayerTech, 'id'>> & UpdatedAt
 		>;
 	}
 }

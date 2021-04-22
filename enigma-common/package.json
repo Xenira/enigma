@@ -1,0 +1,14 @@
+{
+  "name": "enigma-common",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "decimal.js": "^10.2.1"
+  }
+}

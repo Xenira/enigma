@@ -5,26 +5,16 @@ export async function up(knex: Knex): Promise<void> {
 		.createTable('players', function (table) {
 			table.uuid('id').primary();
 			table.uuid('user_id').notNullable();
-			table.integer('money').notNullable().defaultTo(100);
+			table.double('money').notNullable().defaultTo(100);
 			table.integer('money_capacity').notNullable().defaultTo(1000);
-			table.integer('money_production').notNullable().defaultTo(0);
-			table.timestamp('money_updated').notNullable().defaultTo(knex.fn.now());
-			table.integer('science').notNullable().defaultTo(10);
+			table.double('science').notNullable().defaultTo(10);
 			table.integer('science_capacity').notNullable().defaultTo(100);
-			table.integer('science_production').notNullable().defaultTo(0);
-			table.timestamp('science_updated').notNullable().defaultTo(knex.fn.now());
 			table.integer('energy').notNullable().defaultTo(10);
-			table.integer('industry').notNullable().defaultTo(10);
+			table.double('industry').notNullable().defaultTo(10);
 			table.integer('industry_capacity').notNullable().defaultTo(100);
-			table.integer('industry_production').notNullable().defaultTo(0);
-			table
-				.timestamp('industry_updated')
-				.notNullable()
-				.defaultTo(knex.fn.now());
-			table.integer('food').notNullable().defaultTo(0);
+			table.double('food').notNullable().defaultTo(0);
 			table.integer('food_capacity').notNullable().defaultTo(100);
-			table.integer('food_production').notNullable().defaultTo(0);
-			table.timestamp('food_updated').notNullable().defaultTo(knex.fn.now());
+			table.timestamp('calculated_at').notNullable().defaultTo(knex.fn.now());
 			table.timestamps(false, true);
 			table.foreign('user_id').references('id').inTable('users');
 		})
@@ -32,8 +22,11 @@ export async function up(knex: Knex): Promise<void> {
 			table.uuid('id').primary();
 			table.uuid('user_id').notNullable();
 			table.integer('tech_id').notNullable();
-			table.integer('progress').defaultTo(0);
-			table.timestamp('progress_updated').defaultTo(knex.fn.now());
+			table.boolean('complete').notNullable().defaultTo(false);
+			table.boolean('researching').defaultTo(false);
+			table.timestamp('started_at').nullable();
+			table.timestamp('finished_at').nullable();
+			table.float('progress').defaultTo(0);
 			table.timestamps(false, true);
 			table.foreign('user_id').references('id').inTable('users');
 			table.unique(['id']);

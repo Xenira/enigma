@@ -7,6 +7,7 @@ import PlayerRouter from './player.route';
 // Import used controllers
 import * as userCtrl from '../controllers/user.controller';
 import TechRouter from './tech.route';
+import { GameController } from '../controllers/game.controller';
 
 const router: Router = Router();
 
@@ -23,7 +24,19 @@ router.post('/logout', (req: Request, res: Response) => {
 });
 router.post('/register', userCtrl.register);
 
-router.use('/player', Authorization.any, PlayerRouter);
-router.use('/tech', Authorization.any, TechRouter);
+router.use(
+	'/player',
+	Authorization.any,
+	GameController.loadPlayerData,
+	GameController.simulate,
+	PlayerRouter
+);
+router.use(
+	'/tech',
+	Authorization.any,
+	GameController.loadPlayerData,
+	GameController.simulate,
+	TechRouter
+);
 
 export default router;

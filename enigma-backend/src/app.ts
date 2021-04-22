@@ -83,6 +83,7 @@ if (app.get('env') === 'development') {
 		'Registering dev error handler. If you see this message in prod use, there is something wrong.'
 	);
 	app.use((err: any, req: any, res: any, next: any) => {
+		console.error(err, err.stack);
 		res.status(err.status || 500);
 		res.json({
 			error: err,
@@ -93,6 +94,7 @@ if (app.get('env') === 'development') {
 	// production error handler
 	// no stacktraces leaked to user
 	app.use((err: any, req: any, res: any, next: any) => {
+		console.error(err, err.stack);
 		res.status(err.status || 500);
 		res.json({
 			error: {},

@@ -46,3 +46,7 @@ enigma-frontend/typings
 # System Files
 .DS_Store
 Thumbs.db
+
+# Test files
+.nyc_output
+coverage

@@ -1,11 +1,14 @@
 {
-	"folders": [
-		{
-			"path": "enigma-frontend"
-		},
-		{
-			"path": "enigma-backend"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "enigma-frontend"
+    },
+    {
+      "path": "enigma-backend"
+    },
+    {
+      "path": "enigma-common"
+    }
+  ],
+  "settings": {}
 }

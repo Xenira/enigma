@@ -74,7 +74,6 @@ export default class Authorization {
 			return next();
 		}
 
-		console.warn('Unauthorized request to', req.url);
 		res.sendStatus(401);
 	}
 }
