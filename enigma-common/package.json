@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "decimal.js": "^10.2.1"
+    "decimal.js": "^10.2.1",
+    "luxon": "^1.26.0"
+  },
+  "devDependencies": {
+    "@types/luxon": "^1.26.5"
   }
 }

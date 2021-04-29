@@ -1,21 +1,6 @@
+import { IPlayerView } from 'enigma-common';
 import { IPlayer } from '../models/player.model';
 import { View } from './view';
-
-export interface IPlayerView {
-	money: number;
-	moneyCapacity: number;
-
-	science: number;
-	scienceCapacity: number;
-
-	industry: number;
-	industryCapacity: number;
-
-	energy: number;
-
-	food: number;
-	foodCapacity: number;
-}
 
 export class PlayerView extends View<IPlayer> implements IPlayerView {
 	money!: number;
@@ -32,8 +17,15 @@ export class PlayerView extends View<IPlayer> implements IPlayerView {
 	food!: number;
 	foodCapacity!: number;
 
-	constructor(player: IPlayer) {
+	constructor(player: IPlayer, exact = false) {
 		super(player);
+
+		if (exact) {
+			this.money = player.money;
+			this.science = player.science;
+			this.industry = player.industry;
+			this.food = player.food;
+		}
 	}
 
 	protected fromModle(model: IPlayer): void {

@@ -1,19 +1,24 @@
 import { Decimal } from 'decimal.js';
-import { IRessources } from 'enigma-common';
 import { DateTime } from 'luxon';
-import { IPlayer } from '../../models/player.model';
+import { IPlayerView, IRessources } from '../../interfaces';
 import { Consumer } from './consumers/consumer';
 
+export interface ISimulationResult {}
+
 export class Simulation {
-	constructor(private player: IPlayer, private consumers: Consumer[] = []) {}
+	constructor(
+		public player: IPlayerView,
+		public calculatedAt: Date,
+		private consumers: Consumer[] = []
+	) {}
 
 	public addConsumers(...consumer: Consumer[]): Simulation {
 		this.consumers.push(...consumer);
 		return this;
 	}
 
-	public run(target: DateTime = DateTime.now()): void {
-		const lastCalculatedAt = DateTime.fromJSDate(this.player.calculated_at);
+	public run(target: DateTime = DateTime.now()): Simulation {
+		const lastCalculatedAt = DateTime.fromJSDate(this.calculatedAt);
 		const targetMinutes = Decimal.max(
 			new Decimal(0),
 			new Decimal(target.diff(lastCalculatedAt, 'minutes').minutes).toDP(
@@ -23,8 +28,7 @@ export class Simulation {
 		);
 
 		console.debug(
-			target.diff(DateTime.fromJSDate(this.player.calculated_at), 'minutes')
-				.minutes
+			target.diff(DateTime.fromJSDate(this.calculatedAt), 'minutes').minutes
 		);
 		if (targetMinutes.lte(0)) {
 			console.debug(
@@ -33,7 +37,7 @@ export class Simulation {
 				'is',
 				targetMinutes
 			);
-			return;
+			return this;
 		}
 		console.debug(
 			'Starting simulation for',
@@ -44,30 +48,60 @@ export class Simulation {
 
 		let minuteCounter = new Decimal(targetMinutes);
 		while (minuteCounter.gt(0)) {
-			const nextTarget = this.getNextTarget();
-			const currentStep = Decimal.min(
-				minuteCounter,
-				Decimal.max(
-					!nextTarget.isNaN() && nextTarget.gt(0) ? nextTarget : minuteCounter,
-					new Decimal(0.01)
-				)
-			);
+			const nextTargets = this.getNextTargets();
+			// TODO: Remove initial calculation
+			let currentStep = minuteCounter;
+			// TODO: Calculate from producers
+			let production: IRessources = Ressources.of(0, 0, 0, 0);
+			let ressources = this.calculateRessources(production);
+			let totalRequired = this.calculateRequiredRessources(currentStep);
+			let ressourceKey = this.calculateRessourceKey(ressources, totalRequired);
+
+			for (const nextTarget of nextTargets) {
+				const nextStep = Decimal.min(
+					minuteCounter,
+					Decimal.max(
+						nextTarget.minutes.gt(0) ? nextTarget.minutes : minuteCounter,
+						new Decimal(0.01)
+					)
+				);
+
+				const stepProduction = Ressources.of(0, 0, 0, 0);
+				const stepRessources = this.calculateRessources(stepProduction);
+				const stepTotalRequired = this.calculateRequiredRessources(nextStep);
+				const stepRessourceKey = this.calculateRessourceKey(
+					stepRessources,
+					stepTotalRequired
+				);
+
+				if (nextTarget.consumer.canUse(ressourceKey)) {
+					currentStep = nextStep;
+					production = stepProduction;
+					ressources = stepRessources;
+					totalRequired = stepTotalRequired;
+					ressourceKey = stepRessourceKey;
+					break;
+				}
+			}
 			console.debug(
 				'Performing simulation step of',
 				currentStep,
 				'minutes. Next completion is',
-				nextTarget,
+				nextTargets,
 				'. Player before simulation is',
 				this.player
 			);
 
-			// TODO: Calculate from producers
-			const production: IRessources = Ressources.of(0, 0, 0, 0);
-			const ressources = this.calculateRessources(production);
-			const totalRequired = this.calculateRequiredRessources(currentStep);
-			const ressourceKey = this.calculateRessourceKey(
+			console.debug(
+				'With prod',
+				production,
+				'there are',
 				ressources,
-				totalRequired
+				'of',
+				totalRequired,
+				'ressources, resulting in',
+				ressourceKey,
+				'as key.'
 			);
 
 			this.consumers.forEach((c) => {
@@ -76,7 +110,14 @@ export class Simulation {
 					ressourceKey
 				);
 				const usedRessources = c.consume(currentStep, availableRessources);
-				console.debug('Used', usedRessources, 'for', c.constructor.name);
+				console.debug(
+					'Used',
+					usedRessources,
+					'of',
+					availableRessources,
+					'for',
+					c.constructor.name
+				);
 				this.subtractConsumptionFromProduction(production, usedRessources);
 			});
 
@@ -94,20 +135,18 @@ export class Simulation {
 				this.player
 			);
 		}
-		this.player.calculated_at = DateTime.fromJSDate(this.player.calculated_at)
+		this.calculatedAt = DateTime.fromJSDate(this.calculatedAt)
 			.plus({ minutes: targetMinutes.toNumber() })
 			.toJSDate();
 		console.debug('Finised simulation');
+
+		return this;
 	}
 
-	private getNextTarget(): Decimal {
-		return this.consumers.reduce((prev, curr) => {
-			const minutes = curr.getMinutes();
-			if (prev.isNaN() || prev.gt(minutes)) {
-				return minutes;
-			}
-			return prev;
-		}, new Decimal(NaN));
+	private getNextTargets(): { minutes: Decimal; consumer: Consumer }[] {
+		return this.consumers
+			.map((c) => ({ minutes: c.getMinutes(), consumer: c }))
+			.sort((a, b) => a.minutes.sub(b.minutes).toNumber());
 	}
 
 	private calculateRessources(production: IRessources): IRessources {
@@ -132,22 +171,22 @@ export class Simulation {
 	private saveUpdatedRessourcesToPlayer(production: IRessources): void {
 		this.player.money = this.calculateNewRessourceValue(
 			this.player.money,
-			this.player.money_capacity,
+			this.player.moneyCapacity,
 			production.money
 		).toNumber();
 		this.player.science = this.calculateNewRessourceValue(
 			this.player.science,
-			this.player.science_capacity,
+			this.player.scienceCapacity,
 			production.science
 		).toNumber();
 		this.player.industry = this.calculateNewRessourceValue(
 			this.player.industry,
-			this.player.industry_capacity,
+			this.player.industryCapacity,
 			production.industry
 		).toNumber();
 		this.player.food = this.calculateNewRessourceValue(
 			this.player.food,
-			this.player.food_capacity,
+			this.player.foodCapacity,
 			production.food
 		).toNumber();
 	}
@@ -170,10 +209,10 @@ export class Simulation {
 			.map((c) => c.getConsumption(minutes))
 			.reduce(
 				(prev: IRessources, curr) => ({
-					money: prev.money.plus(curr.money || new Decimal(0)),
-					science: prev.science.plus(curr.science || new Decimal(0)),
-					industry: prev.industry.plus(curr.industry || new Decimal(0)),
-					food: prev.food.plus(curr.food || new Decimal(0)),
+					money: prev.money.plus(curr.money || 0),
+					science: prev.science.plus(curr.science || 0),
+					industry: prev.industry.plus(curr.industry || 0),
+					food: prev.food.plus(curr.food || 0),
 				}),
 				Ressources.of(0, 0, 0, 0)
 			);
@@ -194,25 +233,25 @@ export class Simulation {
 
 		return {
 			money: Decimal.min(
-				total.money.isZero() || total.money.isNaN
+				total.money.isZero() || total.money.isNaN()
 					? new Decimal(1)
 					: ressources.money.div(total.money),
 				1
 			),
 			science: Decimal.min(
-				total.science.isZero() || total.science.isNaN
+				total.science.isZero() || total.science.isNaN()
 					? new Decimal(1)
 					: ressources.science.div(total.science),
 				1
 			),
 			industry: Decimal.min(
-				total.industry.isZero() || total.industry.isNaN
+				total.industry.isZero() || total.industry.isNaN()
 					? new Decimal(1)
 					: ressources.industry.div(total.industry),
 				1
 			),
 			food: Decimal.min(
-				total.food.isZero() || total.food.isNaN
+				total.food.isZero() || total.food.isNaN()
 					? new Decimal(1)
 					: ressources.food.div(total.food),
 				1

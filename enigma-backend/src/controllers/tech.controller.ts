@@ -14,22 +14,26 @@ export class TechController {
 		next: NextFunction
 	) => {
 		console.log('Getting player from request');
-		const tech = req.tech;
+		const active = req.query.active;
+		console.log(active);
+		const tech = req.tech?.filter((t) => active !== 'true' || t.researching);
 		if (tech) {
 			const techViews = tech.map((t) => new TechView(t));
-			const techIds = techViews.map((t) => t.id);
-			const completedTechs = techViews
-				.filter((t) => t.complete)
-				.map((t) => t.id);
 
-			TechList.filter((t) => !techIds.includes(t.id)).forEach((t) => {
-				if (
-					t.dependencies.length === 0 ||
-					t.dependencies.some((dep) => completedTechs.includes(dep.id))
-				) {
-					techViews.push(TechView.fromTech(t));
-				}
-			});
+			if (active !== 'true') {
+				const techIds = techViews.map((t) => t.id);
+				const completedTechs = techViews
+					.filter((t) => t.complete)
+					.map((t) => t.id);
+				TechList.filter((t) => !techIds.includes(t.id)).forEach((t) => {
+					if (
+						t.dependencies.length === 0 ||
+						t.dependencies.some((dep) => completedTechs.includes(dep.id))
+					) {
+						techViews.push(TechView.fromTech(t));
+					}
+				});
+			}
 
 			res.json(techViews);
 		} else {

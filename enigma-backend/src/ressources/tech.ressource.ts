@@ -41,7 +41,7 @@ export const TManufacturingFacilities: ITech = {
 };
 
 export const TSmallLaboratory: ITech = {
-	id: 2,
+	id: 3,
 	name: 'Small Laboratory',
 	description: 'tbd',
 	cost: 3,
@@ -50,7 +50,7 @@ export const TSmallLaboratory: ITech = {
 };
 
 export const TPodConstruction: ITech = {
-	id: 3,
+	id: 4,
 	name: 'Pod Construction',
 	description:
 		'It might not be a fully fleged Space Ship, but still better than going by foot.',
@@ -60,7 +60,7 @@ export const TPodConstruction: ITech = {
 };
 
 export const TRecroutingOffice: ITech = {
-	id: 4,
+	id: 5,
 	name: 'Recrouting Office',
 	description: 'Space travel for dummies.',
 	cost: 5,
@@ -69,7 +69,7 @@ export const TRecroutingOffice: ITech = {
 };
 
 export const TTrainingCenter: ITech = {
-	id: 5,
+	id: 6,
 	name: 'Training center',
 	description: 'Space travel for dummies.',
 	cost: 5,
@@ -81,6 +81,7 @@ export const TechList = [
 	THomeBuildPermits,
 	TSolarCells,
 	TManufacturingFacilities,
+	TSmallLaboratory,
 	TPodConstruction,
 	TRecroutingOffice,
 	TTrainingCenter,

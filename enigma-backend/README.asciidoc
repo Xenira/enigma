@@ -1,0 +1,5 @@
+== Postgres Docker
+To run the Backend you will need a local Postgres database. The simplest way to set this up is using docker:
+```
+docker run --name enigma-postgres -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+```

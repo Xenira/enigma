@@ -1,12 +1,13 @@
+import { ResearchConsumer, Simulation } from 'enigma-common';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { Knex } from 'knex';
 import HttpError from '../config/error';
-import { ResearchConsumer } from '../game/simulation/consumers/research-consumer';
-import { Simulation } from '../game/simulation/simulation';
 import knexInstance from '../models/db';
 import { IPlayer, PlayerModel } from '../models/player.model';
 import { IPlayerTech, TechModel } from '../models/tech.model';
 import { IUser } from '../models/user.model';
+import { PlayerView } from '../views/player.view';
+import { TechView } from '../views/tech.view';
 
 export interface IGameRequest extends Request {
 	player?: IPlayer;
@@ -74,8 +75,37 @@ export class GameController {
 			return next(new HttpError(500, 'Failed to load player data'));
 		}
 
-		const researchConsumer = new ResearchConsumer(tech);
-		new Simulation(player, [researchConsumer]).run();
+		const researchConsumer = new ResearchConsumer(
+			tech.map((t) => new TechView(t))
+		);
+		const simulation = new Simulation(
+			new PlayerView(player),
+			player.calculated_at,
+			[researchConsumer]
+		).run();
+
+		GameController.updatePlayerData(player, tech, simulation, researchConsumer);
+
 		next();
 	};
+
+	private static updatePlayerData(
+		player: IPlayer,
+		tech: IPlayerTech[],
+		simulation: Simulation,
+		researchConsumer: ResearchConsumer
+	) {
+		player.calculated_at = simulation.calculatedAt;
+		player.money = simulation.player.money;
+		player.science = simulation.player.science;
+		player.industry = simulation.player.industry;
+		player.food = simulation.player.food;
+
+		researchConsumer.research.forEach((r) => {
+			const playerTech = tech.find((t) => (t.tech_id = r.id));
+			if (playerTech) {
+				TechView.fromTechView(r).applyTo(playerTech);
+			}
+		});
+	}
 }

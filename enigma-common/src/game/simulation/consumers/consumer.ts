@@ -8,4 +8,5 @@ export abstract class Consumer {
 		minutes: Decimal,
 		ressources: IRessources
 	): Partial<IRessources>;
+	abstract canUse(ressourceKey: IRessources): boolean;
 }
